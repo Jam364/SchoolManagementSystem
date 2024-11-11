@@ -131,7 +131,7 @@ class Employee(TimeStampedModel):
                     .order_by('id')
                     .last()
                 )
-                
+
                 if last_employee and last_employee.employee_id:
                     # Extract the numeric part and increment it
                     last_id = int(last_employee.employee_id[-4:])
@@ -140,13 +140,15 @@ class Employee(TimeStampedModel):
                     # Start with EMP0001 if no records exist or if none match the format
                     new_id = "EMP0001"
 
-                # Check if generated `new_id` already exists
-                if Employee.objects.filter(employee_id=new_id).exists():
-                    # If `new_id` already exists (very unlikely, but possible in some cases), try again
-                    return self.save(*args, **kwargs)  # Retry generating a unique `employee_id`
+                # Check if generated `new_id` already exists and retry if necessary
+                while Employee.objects.filter(employee_id=new_id).exists():
+                    # Increment the numeric part of the employee ID until it is unique
+                    last_id += 1
+                    new_id = f"EMP{last_id + 1:04}"
 
+                # Set the unique employee_id
                 self.employee_id = new_id
-        
+
         super().save(*args, **kwargs)
 
      def __str__(self):
@@ -163,11 +165,11 @@ class StaffPerformance(TimeStampedModel):
          return f"Performance Evaluation for {self.employee.employee_name} on {self.date_evaluated}"
     
 class Qualification(TimeStampedModel):
-     employee = models.ForeignKey('account.CustomUser', on_delete=models.CASCADE, related_name="qualifications")
+     employee = models.ForeignKey('employee', on_delete=models.CASCADE, related_name="qualifications")
      discipline = models.CharField(max_length=100)
      institution = models.CharField(max_length=100)
      name = models.CharField(max_length=100)
      year_obtained = models.PositiveIntegerField()
 
      def __str__(self):
-          return f"{self.name} - {self.employee.username} ({self.year_obtained})"
+          return f"{self.name}from {self.institution}  - {self.employee.username} ({self.year_obtained})"

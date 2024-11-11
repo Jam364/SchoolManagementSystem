@@ -2,6 +2,132 @@
 
 {% block content %}
 <div class="container-fluid">
+    <!-- Welcome Section -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="jumbotron">
+                <h1>Welcome to the Staff Dashboard, {{ user.first_name }}!</h1>
+                <p>Manage your tasks, check announcements, and view important updates here.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Sections -->
+    <div class="row">
+        <!-- Tasks Section -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Your Tasks</div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for task in tasks %}
+                            <li class="list-group-item">
+                                <strong>{{ task.name }}</strong> 
+                                - {{ task.status }}
+                                <span class="badge badge-primary float-right">{{ task.due_date }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <a href="#" class="btn btn-primary mt-2">View All Tasks</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Announcements Section -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Recent Announcements</div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for announcement in announcements %}
+                            <li class="list-group-item">
+                                <strong>{{ announcement.title }}</strong><br>
+                                <small>{{ announcement.created_at|date:"F j, Y" }}</small>
+                                <p>{{ announcement.message }}</p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upcoming Events Section -->
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Upcoming Events</div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for event in events %}
+                            <li class="list-group-item">
+                                <strong>{{ event.name }}</strong> 
+                                <span class="badge badge-success float-right">{{ event.date|date:"F j, Y" }}</span>
+                                <p>{{ event.description }}</p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Staff Profile Section -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Your Profile</div>
+                <div class="card-body">
+                    <p><strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+                    <p><strong>Role:</strong> Staff</p>
+                    <p><strong>Email:</strong> {{ user.email }}</p>
+                    <p><strong>Phone:</strong> 123-456-7890</p>
+                    <a href="#" class="btn btn-secondary">Edit Profile</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Task Completion Progress Section -->
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">Task Completion Progress</div>
+                <div class="card-body">
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: {{ task_completion_percentage }}%;" aria-valuenow="{{ task_completion_percentage }}" aria-valuemin="0" aria-valuemax="100">{{ task_completion_percentage }}%</div>
+                    </div>
+                    <p class="mt-2">You have completed <strong>{{ task_completion_percentage }}%</strong> of your assigned tasks.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications Section -->
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">Notifications</div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for notification in notifications %}
+                            <li class="list-group-item d-flex justify-content-between">
+                                <strong>{{ notification.title }}</strong>
+                                <span class="badge badge-warning">{{ notification.created_at|date:"F j, Y" }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <a href="#" class="btn btn-info mt-2">View All Notifications</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% comment %} {% extends 'base/base.html' %}
+
+{% block content %}
+<div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
       <div class="jumbotron">
@@ -38,4 +164,4 @@
     </div>
   </div>
 </div>
-{% endblock %}
+{% endblock %} {% endcomment %}

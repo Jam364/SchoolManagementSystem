@@ -13,6 +13,45 @@
             <span>Tasks</span>
           </a>
         </li>
+         <!-- Employee Management Links -->
+      <li class="nav-item">
+        <a class="nav-link text-light d-flex align-items-center" href="#employeeManagement" data-bs-toggle="collapse">
+          <i class="bi bi-person-fill me-2"></i>
+          <span>Employee Management</span>
+        </a>
+        <ul class="nav flex-column ms-3 collapse" id="employeeManagement">
+          <li class="nav-item">
+            <a class="nav-link text-light" href="{% url 'employee_list' %}">
+              <i class="bi bi-person-fill me-2"></i>
+              <span>Employees</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light" href="{% url 'employee_create' %}">
+              <i class="bi bi-person-plus-fill me-2"></i>
+              <span>Add Employee</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light" href="{% url 'staffperformance_list' %}">
+              <i class="bi bi-bar-chart-line-fill me-2"></i>
+              <span>Staff Performance</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light" href="{% url 'qualification_list' %}">
+              <i class="bi bi-book-fill me-2"></i>
+              <span>Qualifications</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light" href="{% url 'employee_designation_list' %}">
+              <i class="bi bi-person-badge-fill me-2"></i>
+              <span>Designations</span>
+            </a>
+          </li>
+        </ul>
+      </li>
         <li class="nav-item">
           <a class="nav-link text-light d-flex align-items-center" href="#">
             <i class="bi bi-megaphone-fill me-2"></i>

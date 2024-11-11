@@ -23,6 +23,7 @@ from .mixins import RedirectAuthenticatedUserMixin,NotAuthenticatedMixin
 from .decorators import role_required
 from django.http import HttpResponseRedirect
 
+
 def handler404(request, exception):
     return render(request, 'errors/404.html', status=404)
 
@@ -101,23 +102,69 @@ def teacher_dashboard(request):
 
 
 # @role_required('staff')
+# @login_required
+# @role_required(['staff'])
+# def staff_dashboard(request):
+#     """
+#     Renders the staff dashboard with relevant data.
+#     """
+#     # context = get_staff_data(request)
+#     context = {
+#         'tasks': [
+#             {'name': 'Process payments', 'status': 'Pending'},
+#             {'name': 'Generate reports', 'status': 'Completed'}
+#         ],
+#         'announcements': [
+#             {'message': 'Payroll processed.'},
+#             {'message': 'Holiday schedule updated.'}
+#         ]
+#     }
+#     return render(request, 'accounts/dashboards/staff_dashboard.html', context)
+
 @login_required
-@role_required(['staff'])
 def staff_dashboard(request):
-    """
-    Renders the staff dashboard with relevant data.
-    """
-    # context = get_staff_data(request)
+    # Dummy data for tasks
+    tasks = [
+        {'name': 'Complete Staff Report', 'status': 'In Progress', 'due_date': '2024-11-10'},
+        {'name': 'Review Performance Feedback', 'status': 'Completed', 'due_date': '2024-11-05'},
+        {'name': 'Attend Training on New Software', 'status': 'Not Started', 'due_date': '2024-11-15'},
+        {'name': 'Prepare Budget Presentation', 'status': 'In Progress', 'due_date': '2024-11-20'},
+    ]
+    
+    # Dummy data for announcements
+    announcements = [
+        {'title': 'New Staff Onboarding Schedule', 'message': 'Please review the new staff onboarding schedule.', 'created_at': '2024-11-01'},
+        {'title': 'Holiday Announcement', 'message': 'The office will be closed for holidays from December 24 to January 2.', 'created_at': '2024-10-30'},
+        {'title': 'Team Building Event', 'message': 'A team-building event is scheduled for November 25.', 'created_at': '2024-11-01'},
+    ]
+    
+    # Dummy data for events
+    events = [
+        {'name': 'Staff Training on New Tools', 'description': 'Training session for all staff on the latest tools and software.', 'date': '2024-11-10'},
+        {'name': 'Annual Company Picnic', 'description': 'Join us for the annual company picnic and team-building activities.', 'date': '2024-12-05'},
+        {'name': 'Year-End Review', 'description': 'Year-end review meeting for all departments.', 'date': '2024-12-15'},
+    ]
+    
+    # Dummy data for notifications
+    notifications = [
+        {'title': 'Task Completed: Staff Report', 'created_at': '2024-11-05'},
+        {'title': 'Reminder: Prepare Budget Presentation', 'created_at': '2024-11-07'},
+        {'title': 'New Announcement: Team Building Event', 'created_at': '2024-11-01'},
+    ]
+    
+    # Dummy task completion percentage (for testing)
+    task_completion_percentage = 50  # For example, 50% of tasks are completed
+    
+    # Passing the dummy data to the template
     context = {
-        'tasks': [
-            {'name': 'Process payments', 'status': 'Pending'},
-            {'name': 'Generate reports', 'status': 'Completed'}
-        ],
-        'announcements': [
-            {'message': 'Payroll processed.'},
-            {'message': 'Holiday schedule updated.'}
-        ]
+        'tasks': tasks,
+        'announcements': announcements,
+        'events': events,
+        'notifications': notifications,
+        'task_completion_percentage': task_completion_percentage,
+        'user': request.user,  # Simulating the logged-in user
     }
+
     return render(request, 'accounts/dashboards/staff_dashboard.html', context)
 
 

@@ -66,6 +66,8 @@ class QualificationForm(forms.ModelForm):
             'year_obtained': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter year obtained'}),
         }
 
+        
+
 class EmployeeDesignationForm(forms.ModelForm):
     class Meta:
         model = EmployeeDesignation

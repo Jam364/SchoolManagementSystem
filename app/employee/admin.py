@@ -9,6 +9,17 @@ class EmployeeDesignationAdmin(admin.ModelAdmin):
     list_filter = ('department',)
     ordering = ('name',)
 
+
+    # Restrict add, change, and delete to superusers
+    def has_add_permission(self, request):
+        return request.user.is_superuser
+
+    def has_change_permission(self, request, obj=None):
+        return request.user.is_superuser
+
+    def has_delete_permission(self, request, obj=None):
+        return request.user.is_superuser
+
 @admin.register(Employee)
 class EmployeeAdmin(admin.ModelAdmin):
     list_display = ('employee_name', 'designation', 'employee_status', 'date_of_joining', 'date_of_resignation')
@@ -38,6 +49,16 @@ class EmployeeAdmin(admin.ModelAdmin):
         }),
     )
 
+    # Restrict add, change, and delete to superusers
+    def has_add_permission(self, request):
+        return request.user.is_superuser
+
+    def has_change_permission(self, request, obj=None):
+        return request.user.is_superuser
+
+    def has_delete_permission(self, request, obj=None):
+        return request.user.is_superuser
+
 @admin.register(StaffPerformance)
 class StaffPerformanceAdmin(admin.ModelAdmin):
     list_display = ('employee', 'rating', 'date_evaluated')
@@ -46,9 +67,29 @@ class StaffPerformanceAdmin(admin.ModelAdmin):
     date_hierarchy = 'date_evaluated'
     ordering = ('-date_evaluated',)
 
+    # Restrict add, change, and delete to superusers
+    def has_add_permission(self, request):
+        return request.user.is_superuser
+
+    def has_change_permission(self, request, obj=None):
+        return request.user.is_superuser
+
+    def has_delete_permission(self, request, obj=None):
+        return request.user.is_superuser
+
 @admin.register(Qualification)
 class QualificationAdmin(admin.ModelAdmin):
     list_display = ('name', 'employee', 'discipline', 'institution', 'year_obtained')
     search_fields = ('name', 'employee__username', 'discipline', 'institution')
     list_filter = ('year_obtained', 'discipline', 'institution')
     ordering = ('-year_obtained',)
+
+     # Restrict add, change, and delete to superusers
+    def has_add_permission(self, request):
+        return request.user.is_superuser
+
+    def has_change_permission(self, request, obj=None):
+        return request.user.is_superuser
+
+    def has_delete_permission(self, request, obj=None):
+        return request.user.is_superuser

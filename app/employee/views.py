@@ -98,6 +98,7 @@ class QualificationDetail(DetailView):
 class QualificationCreate(CreateView):
     model = Qualification
     form_class = QualificationForm
+    print(form_class)
     template_name = 'employee/qualification/qualification_form.html'
     success_url = reverse_lazy('qualification_list')
 @method_decorator(role_required(['staff']), name='dispatch')
@@ -147,3 +148,9 @@ class EmployeeDesignationDelete(DeleteView):
     model = EmployeeDesignation
     template_name = 'employee/employeedesignation/employee_designation_confirm_delete.html'
     success_url = reverse_lazy('employee_designation_list')
+
+
+
+
+
+
